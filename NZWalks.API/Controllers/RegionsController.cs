@@ -12,6 +12,7 @@ namespace NZWalks.API.Controllers
     // https://localhost:1234/api/regions
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RegionsController : ControllerBase
     {
         private readonly NZWalksDbContext dbContext;

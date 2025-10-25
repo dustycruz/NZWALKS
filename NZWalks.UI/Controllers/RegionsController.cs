@@ -27,7 +27,7 @@ namespace NZWalks.UI.Controllers
                 // Get All Regions from Web API
                 var client = httpClientFactory.CreateClient();
 
-                var httpResponseMessage = await client.GetAsync("https://localhost:7081/api/regions");
+                var httpResponseMessage = await client.GetAsync("http://localhost:5249/api/regions");
 
                 httpResponseMessage.EnsureSuccessStatusCode();
 
@@ -35,7 +35,7 @@ namespace NZWalks.UI.Controllers
             }
             catch (Exception ex)
             {
-                // Log the exception
+                TempData["ErrorMessage"] = ex.Message;
             }
 
             return View(response);
@@ -57,7 +57,7 @@ namespace NZWalks.UI.Controllers
             var httpRequestMessage = new HttpRequestMessage()
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri("https://localhost:7081/api/regions"),
+                RequestUri = new Uri("http://localhost:5249/api/regions"),
                 Content = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json")
             };
 
@@ -80,7 +80,7 @@ namespace NZWalks.UI.Controllers
         {
             var client = httpClientFactory.CreateClient();
 
-            var response = await client.GetFromJsonAsync<RegionDto>($"https://localhost:7081/api/regions/{id.ToString()}");
+            var response = await client.GetFromJsonAsync<RegionDto>($"http://localhost:5249/api/regions/{id.ToString()}");
 
             if (response is not null)
             {
@@ -99,7 +99,7 @@ namespace NZWalks.UI.Controllers
             var httpRequestMessage = new HttpRequestMessage()
             {
                 Method = HttpMethod.Put,
-                RequestUri = new Uri($"https://localhost:7081/api/regions/{request.Id}"),
+                RequestUri = new Uri($"http://localhost:5249/api/regions/{request.Id}"),
                 Content = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json")
             };
 
@@ -124,7 +124,7 @@ namespace NZWalks.UI.Controllers
             {
                 var client = httpClientFactory.CreateClient();
 
-                var httpResponseMessage = await client.DeleteAsync($"https://localhost:7081/api/regions/{request.Id}");
+                var httpResponseMessage = await client.DeleteAsync($"http://localhost:5249/api/regions/{request.Id}");
 
                 httpResponseMessage.EnsureSuccessStatusCode();
 
@@ -132,7 +132,7 @@ namespace NZWalks.UI.Controllers
             }
             catch (Exception ex)
             {
-                // Console
+                TempData["ErrorMessage"] = ex.Message;
             }
 
             return View("Edit");
