@@ -45,13 +45,13 @@ namespace NZWalks.API.Controllers
                         return Ok("User was registered! Please login.");
                     }
                 }
-            }
-            else
-            {
-                return Ok("User was registered with no role! Please login.");
+                else
+                {
+                    return Ok("User was registered with no role! Please Login");
+                }
             }
 
-                return BadRequest("Something went wrong");
+            return BadRequest("Something went wrong");
         }
 
 

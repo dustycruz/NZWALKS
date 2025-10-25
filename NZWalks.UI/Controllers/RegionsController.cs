@@ -26,6 +26,8 @@ namespace NZWalks.UI.Controllers
             {
                 // Get All Regions from Web API
                 var client = httpClientFactory.CreateClient();
+                var token = HttpContext.Session.GetString("JWTToken");
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 var httpResponseMessage = await client.GetAsync("http://localhost:5249/api/regions");
 
@@ -35,6 +37,7 @@ namespace NZWalks.UI.Controllers
             }
             catch (Exception ex)
             {
+                // Log the exception
                 TempData["ErrorMessage"] = ex.Message;
             }
 
